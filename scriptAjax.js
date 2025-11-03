@@ -9,13 +9,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //fetch vai fazer uma requisição http e retornar um promisse (uma promessa de retorno).
 fetch('https://api.github.com/users/Juan-J0rge')
+
+
     //tem vai executar uma função, com o promisse resolvido (resposta), que vai estar carregando
     //os dados do fetch que contem informações da requisição.
     .then(function(resposta) {
+        if(!resposta.ok) {
+            throw new Error("Falha na requisição" + resposta.status);
+        }
         console.log(resposta);
         return resposta.json();
     })
 
+    
     .then(function(json) {
         name.innerText = json.name;
         username.innerText = json.login;
@@ -25,8 +31,14 @@ fetch('https://api.github.com/users/Juan-J0rge')
         repositorios.innerText = json.public_repos;
         botao.href = json.html_url;
         botao.innerText = "Ver perfil no GitHub";
-
 })
+.catch(function(error) {
+    console.error("Erro ao carregar", error);
+}) 
+    
+
+
+
 
 });
 
